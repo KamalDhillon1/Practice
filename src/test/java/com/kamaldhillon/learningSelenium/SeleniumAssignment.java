@@ -1,5 +1,6 @@
 package com.kamaldhillon.learningSelenium;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -7,11 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-//8090
 public class SeleniumAssignment {
 	WebDriver wd;
 
@@ -28,10 +29,12 @@ public class SeleniumAssignment {
 	}
 
 	@Test
-	public void createAccount() {
+	public void verifycreateAccount() {
 
 		WebElement emailInput = wd.findElement(By.id("email_create"));
-		emailInput.sendKeys("dhillon@gmail.com");
+		Random str = new Random();
+		String emailRandom = "emailInput" + str.nextDouble() + "@gmail.com";
+		emailInput.sendKeys(emailRandom);
 
 		WebElement createAccountButton = wd.findElement(By.id("SubmitCreate"));
 		createAccountButton.submit();
@@ -39,8 +42,8 @@ public class SeleniumAssignment {
 		WebElement title = wd.findElement(By.cssSelector("label[for='id_gender2']"));
 		title.click();
 
-		WebElement firstName = wd.findElement(By.id("authentication"));
-		firstName.sendKeys("Kamal");
+		WebElement firstName = wd.findElement(By.id("customer_firstname"));
+		firstName.sendKeys("Komal");
 
 		WebElement lastName = wd.findElement(By.id("customer_lastname"));
 		lastName.sendKeys("Dhillon");
@@ -67,13 +70,13 @@ public class SeleniumAssignment {
 		specialOffers.isSelected();
 
 		WebElement Name1st = wd.findElement(By.id("firstname"));
-		firstName.sendKeys("Kamal");
+		Name1st.sendKeys("Komal");
 
 		WebElement NameLast = wd.findElement(By.id("lastname"));
-		firstName.sendKeys("Dhiilon");
+		NameLast.sendKeys("Dhiilon");
 
 		WebElement company = wd.findElement(By.id("company"));
-		firstName.sendKeys("Siemens Energy");
+		company.sendKeys("Siemens Energy");
 
 		WebElement address1 = wd.findElement(By.id("address1"));
 		address1.sendKeys("16 Rednor Drive");
@@ -89,7 +92,7 @@ public class SeleniumAssignment {
 		selectState.selectByVisibleText("Alaska");
 
 		WebElement postalCode = wd.findElement(By.id("postcode"));
-		state.sendKeys("245678");
+		postalCode.sendKeys("99703");
 
 		WebElement additionalInformation = wd.findElement(By.id("other"));
 		additionalInformation.sendKeys("It's my info here");
@@ -104,8 +107,10 @@ public class SeleniumAssignment {
 		addressAlias.sendKeys("16 Rednor Drive,245678");
 
 		WebElement registerButton = wd.findElement(By.id("submitAccount"));
-		registerButton.submit();
+		registerButton.click();
 
+		Assert.assertEquals(wd.getCurrentUrl(), "http://automationpractice.com/index.php?controller=my-account",
+				"Error");
 	}
 
 	@AfterMethod
