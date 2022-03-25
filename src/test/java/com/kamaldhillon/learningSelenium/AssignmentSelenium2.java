@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -77,19 +78,20 @@ public class AssignmentSelenium2 {
 			
 			//CartOrderConfirmation message assertion
 			WebElement cartOrderConfirmation=wd.findElement(By.className("icon-ok"));
-		    Assert.assertEquals("Product successfully added to your shopping cart","Product successfully added to your shopping cart",cartOrderConfirmation.getText());
+		    Assert.assertEquals("Product successfully added to your shopping cart","Product successfully added to your shopping cart","Product not added");
 			
 		    //verifying no. of quanties is same what we choose earlier
 		  WebElement quantity=wd.findElement(By.id("layer_cart_product_quantity"));
-		  Assert.assertEquals("2","2",quantity.getText());
+		  Assert.assertEquals("2","2","quantity not shown");
+		  //Assert.assertEquals("2","2",quantity.getText());
 		  
 		 //Assertion for ProductDescription
 		  WebElement productDescription=wd.findElement(By.id("layer_cart_product_title"));
-		  Assert.assertEquals("Faded Short Sleeve T-shirts","Faded Short Sleeve T-shirts",productDescription.getText());
+		  Assert.assertEquals("Faded Short Sleeve T-shirts","Faded Short Sleeve T-shirts","Short Sleeve");
 		
 		    //verifying total price
 		    WebElement totalPrice=wd.findElement(By.id("total_price_container"));
-		     Assert.assertEquals("$35.02","$35.02",totalPrice.getText());
+		     Assert.assertEquals("$35.02","$35.02","40.00");
 		     
 		//proceed to checkout
 		  WebElement proceedToCheckout2 = wd.findElement(By.cssSelector(".button.btn.btn-default.standard-checkout.button-medium"));
@@ -98,9 +100,10 @@ public class AssignmentSelenium2 {
 		  
 		     //adding comment to order
 		   WebElement comments = wd.findElement(By.cssSelector("textarea[name = 'message']"));
-			comments.sendKeys("Its a Gift!");
-			System.out.println("Message: Its a Gift!");
-		//proceed to checkout
+			comments.sendKeys("Happy Birthday");
+			System.out.println("Happy Birthday");
+		
+			//proceed to checkout
 		WebElement proccedToCheckout3 = wd.findElement(By.cssSelector("button[name='processAddress']"));
 		proccedToCheckout3.submit();
 		
@@ -109,10 +112,7 @@ public class AssignmentSelenium2 {
 		termsAndConditions.click();
 		
 		
-		
 		//proceed to checkout
-		
-		
 		WebElement proceedToCheckout4  = wd.findElement(By.xpath("//button[@name='processCarrier']"));
 		proceedToCheckout4.click();
 		
@@ -122,7 +122,7 @@ public class AssignmentSelenium2 {
 		
 		//paymentmethod confirmation
 		WebElement paymentMethod = wd.findElement(By.className("page-subheading"));
-		Assert.assertEquals("BANK-WIRE PAYMENT.","BANK-WIRE PAYMENT.",paymentMethod.getText());
+		Assert.assertEquals("BANK-WIRE PAYMENT.","BANK-WIRE PAYMENT.","Error Payment");
 		
 		//Confirming order-Last step
 		WebElement confirmMyOrderBtn = wd.findElement(By.cssSelector("button[type='submit'][class='button btn btn-default button-medium']"));
@@ -130,7 +130,14 @@ public class AssignmentSelenium2 {
 		
 		//Confirmed order assertion
 		WebElement orderConfirmation = wd.findElement(By.className("cheque-indent"));
-		Assert.assertEquals("Your order on My Store is complete","Your order on My Store is complete",orderConfirmation.getText());
+		Assert.assertEquals("Your order on My Store is complete","Your order on My Store is complete","Error message");
+		}
+
+		@AfterMethod
+		public void tearDown() {
+			wd.quit();
+		}
+			
 		}
 	}
-}
+
