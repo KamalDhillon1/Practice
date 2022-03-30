@@ -111,6 +111,8 @@ public class SeleniumAssignment {
 
 		Assert.assertEquals(wd.getCurrentUrl(), "http://automationpractice.com/index.php?controller=my-account",
 				"Error");
+		
+		
 	}
 
 	@AfterMethod
